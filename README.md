@@ -11,7 +11,7 @@ Here is a list of functions:\
 `summary.slapmeg` Prints the slapmeg model and results \
 `simslapmeg` Generates joint lingitudinal observations
 
-#Usage
+## Usage
 For details explanations and example usage check the help files within package, but here are some tips.
 * The data need to be in the conventional genomics format, so columns indicate variables and features, whereas rows indicate subjects and repeated measurements.
 * The formula must be supplied as a `formula object`.
