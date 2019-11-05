@@ -1,15 +1,15 @@
 # SlaPMEG
-This package is designed to perform a Shared latent Process Mixed Effects analysis with Globaltest. \\
+This package is designed to perform a Shared latent Process Mixed Effects analysis with Globaltest. \
 
-Here is a list of functions:
-
-`slapmeg` fits slapmeg for a single feature-set
-`multslapmeg` fits slapmeg simultaneously for several feature-sets
-`pairslapmeg`  fits slapmeg based on a computationally efficient approach
-`plotslapmeg`  Plots the estimated random effects within the pathway 
-`print.slapmeg`  Prints the slapmeg model and results with details
-`summary.slapmeg` Prints the slapmeg model and results 
-`simslapmeg` Generates joint lingitudinal observations
+Here is a list of functions:\
+\
+`slapmeg` fits slapmeg for a single feature-set\
+`multslapmeg` fits slapmeg simultaneously for several feature-sets\
+`pairslapmeg`  fits slapmeg based on a computationally efficient approach\
+`plotslapmeg`  Plots the estimated random effects within the pathway \
+`print.slapmeg`  Prints the slapmeg model and results with details\
+`summary.slapmeg` Prints the slapmeg model and results \
+`simslapmeg` Generates joint lingitudinal observations\
 
 #Usage
 For details explanations and example usage check the help files within package, but here are some tips.
