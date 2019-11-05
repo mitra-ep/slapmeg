@@ -59,7 +59,7 @@ testdata<-simslapmeg(nY=25, ntime=3, nsubj = 30)
 head(testdata)
 
 #fit slapmeg to test for the differential expression of a pathway of size 15
-slapmeg1<- slapmeg(Y1+Y2+Y6+Y7+Y8~time, ~1, grouping="group", subject="ID", data=testdata)
+slapmeg1<- pairslapmeg(Y1+Y2+Y6+Y7+Y8~time, ~1, grouping="group", subject="ID", data=testdata)
 slapmeg1
 }
 
