@@ -26,6 +26,8 @@
 #' @param data data frame containing the variables named in \code{fixed}, \code{random},
 #' \code{grouping} and \code{subject}.
 #'
+#' @param nlimit A controling arguments telling slapmeg to use pairwise approach for pathways larger than this value,
+#' default is 10. Note: fitting the joint model may take long for pathways larger than 20 omics.
 #'
 #' @return A list is returned including: \item{call}{the matched call} \item{nfix}{Number
 #' of fixed effect terms in the model, excluding the mandatory intercept} \item{nrand}{Number of
@@ -70,7 +72,7 @@
 #' @importFrom globaltest gt
 #' @export
 
-slapmeg<-function(fixed, random, grouping, subject, data){
+slapmeg<-function(fixed, random, grouping, subject, data, nlimit=10){
 
   #save the call to function
   cl<-match.call()
@@ -113,7 +115,7 @@ slapmeg<-function(fixed, random, grouping, subject, data){
   #list of outcomes
   Ynames <-  all.vars(fixed[[2]])
   nout <- length(Ynames) #number of omics in path
-  if(nout>10){
+  if(nout>nlimit){
     #get the initial values from setinval
 
 

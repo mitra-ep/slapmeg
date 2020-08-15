@@ -5,7 +5,7 @@
 \title{Testing pathways using SLaPMEG (shared latent process mixed effects model and Globaltest) for
 longitudinal Omics data}
 \usage{
-slapmeg(fixed, random, grouping, subject, data)
+slapmeg(fixed, random, grouping, subject, data, nlimit = 10)
 }
 \arguments{
 \item{fixed}{A two-sided linear formula object for specifying the
@@ -25,6 +25,9 @@ by \code{+}.}
 
 \item{data}{data frame containing the variables named in \code{fixed}, \code{random},
 \code{grouping} and \code{subject}.}
+
+\item{nlimit}{A controling arguments telling slapmeg to use pairwise approach for pathways larger than this value,
+default is 10. Note: fitting the joint model may take long for pathways larger than 20 omics.}
 }
 \value{
 A list is returned including: \item{call}{the matched call} \item{nfix}{Number
