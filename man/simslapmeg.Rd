@@ -6,7 +6,7 @@
 \usage{
 simslapmeg(nY, ntime, nsubj, pDif = 1/3, fixed = ~1 + time,
   random = ~1 + time, fixedbeta = c(0, 2), randbeta = c(0, 2), group,
-  groupbeat = 2, sigma.b, sigma.u, seed = as.integer(runif(1, 0,
+  groupbeta = 2, sigma.b, sigma.u, seed = as.integer(runif(1, 0,
   .Machine$integer.max)), returnpar = FALSE)
 }
 \arguments{
@@ -33,7 +33,7 @@ the default is 0 (intercept) and 2 (time)}
 The default is random allocation of half of subjects to each group.
 If use with slapmeg is intended, the group variable should have only two groups}
 
-\item{groupbeat}{effect size of group variable, the default is 2}
+\item{groupbeta}{effect size of group variable, the default is 2}
 
 \item{sigma.b}{variance of the omic- / subject- specific random effects, the length should math \code{nY}.
 If not specified, \code{nY} values from normal distribution will be randomly assigned.}

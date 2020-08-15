@@ -134,14 +134,11 @@ slapmeg<-function(fixed, random, grouping, subject, data){
     npar<-length(inB)
 
     #fit the full joint model
-    sink(file = "runtime_messeges.txt", append = FALSE, type = c("output", "message"), split = FALSE)
     lcmm_full<-multlcmm(fixed=fixed, random=random, subject=substitute(idNames),
                         B=inB, posfix=(npar-2*nout+1):npar,
                         randomY=TRUE, link=rep("linear",nout),
-                        data=data)
-    sink()
-    file.remove("runtime_messeges.txt")
-    #get info on subject and grouping
+                        data=data, verbose = FALSE)
+      #get info on subject and grouping
     data_inf<-unique(data[,c(subject,grouping)])
 
     #name the predicted random effects

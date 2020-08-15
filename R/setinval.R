@@ -51,7 +51,7 @@ setinval<-function(fixed, random, subject, data){
                control = lme4::lmerControl(check.conv.grad = "ignore",
                                            check.conv.singular="ignore",
                                            check.conv.hess ="ignore")))
-  convmodel<-lapply(lmer_model,function(x) try(summary(x)$`optinfo`$conv$lme4$`code`))
+  convmodel<-lapply(lmer_model,function(x) isSingular(x))
 
     ##extract initial values from individual models
   # fixed effects
@@ -70,8 +70,8 @@ setinval<-function(fixed, random, subject, data){
                                  function(x) as.data.frame(lme4::VarCorr(x))[,5])),
                    byrow = TRUE, nrow=nout)
     #remove unsuccessful lmm fits
-    varfix[!sapply(convmodel, is.null)]<-NA
-    covmat[!sapply(convmodel, is.null),]<-NA
+    varfix[sapply(convmodel, function(x) x==TRUE)]<-NA
+    covmat[sapply(convmodel, function(x) x==TRUE),]<-NA
 
     if(nfix==1){
       inB<-c(colMeans(cbind(covmat[,2:nrand]^2,NA),na.rm=T)[-(nrand)], #variance of the random terms
@@ -94,8 +94,8 @@ setinval<-function(fixed, random, subject, data){
                    byrow = TRUE, nrow=nout)
 
     #remove unsuccessful lmm fits
-    varfix[!sapply(convmodel, is.null)]<-NA
-    covmat[!sapply(convmodel, is.null),]<-NA
+    varfix[sapply(convmodel, function(x) x==TRUE)]<-NA
+    covmat[sapply(convmodel, function(x) x==TRUE),]<-NA
 
     if(nfix==1){
       inB<-c(covmat[,2], #std error of the outcomes

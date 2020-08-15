@@ -19,7 +19,7 @@
 #' @param group Vector indicating group membership, the length should match the number of subjects,
 #' The default is random allocation of half of subjects to each group.
 #' If use with slapmeg is intended, the group variable should have only two groups
-#' @param groupbeat effect size of group variable, the default is 2
+#' @param groupbeta effect size of group variable, the default is 2
 #' @param sigma.u Variance of the subject-specific random effects, the length should math the random effects defined
 #' in random formula. If not specified, 2 values from normal distribution will be randomly assigned.
 #' @param sigma.b  variance of the omic- / subject- specific random effects, the length should math \code{nY}.
@@ -52,7 +52,7 @@ simslapmeg<-function(nY,
            fixedbeta=c(0,2),
            randbeta=c(0,2), #should match the formula
            group,
-           groupbeat=2,
+           groupbeta=2,
            sigma.b ,
            sigma.u , #number of simulated datasets
            seed = as.integer(runif(1, 0, .Machine$integer.max)),
@@ -74,7 +74,7 @@ simslapmeg<-function(nY,
 
   ####set parameters
     N<-nsubj*ntime  #total number of data points
-    betasX<-c(fixedbeta, groupbeat)     # fixed effects for b0 and time and group
+    betasX<-c(fixedbeta, groupbeta)     # fixed effects for b0 and time and group
     betasZ<-randbeta  # fixed effects for b0 and time and group
     numeff<-trunc(nY*pDif) #number of outcomes correlated with group
     npar<-1+2+4*nY  #number of parameters estimated with lcmm model
@@ -85,7 +85,8 @@ simslapmeg<-function(nY,
     if(missing(group))  group<-rep(0:1,nsubj/2)
     if(length(group)!=nsubj)
       stop("The length of  group should match the number of subjects!")
-
+    #make sure group is a factor
+    group<-as.factor(group)
 
     data.str<- data.frame(ID = rep(1:nsubj, each = ntime),
                           time= rep(time, nsubj), group=rep(group, each=ntime))
@@ -140,7 +141,7 @@ simslapmeg<-function(nY,
   ####items to return
       if(returnpar==TRUE){
       sim_par<-list(nY=nY,ntime=ntime, nsubj=nsubj, pDif=pDif, fixed=fixed, random=random,
-                      fixedbeta=fixedbeta, randbeta=randbeta, groupbeat=groupbeat,
+                      fixedbeta=fixedbeta, randbeta=randbeta, groupbeta=groupbeta,
                       sigma.b=sigma.b, sigma.u=sigma.u, usedseed=seed)
 
       return(list(sim_data=sim_data,sim_par=sim_par))

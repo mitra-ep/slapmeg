@@ -139,14 +139,12 @@ pairslapmeg<-function(fixed, random, grouping, subject, data){
                                                  paste0(attr(afixed,"term.labels"),collapse = "+")))
   if(nfix==0 & attr(afixed,"intercept")!=0) pairformula<-lapply(pairformula, function(form) paste0(form,"1"))
 
-  sink(file = "runtime_messeges.txt", append = FALSE, type = c("output", "message"), split = FALSE)
 
   pairlcmm<-mapply(function(form,int) multlcmm(formula(form), random=random, subject=idNames,
                                                B=int, posfix=(parset-3):parset,
                                                randomY=TRUE, link=rep("linear",2),
-                                               data=data),pairformula,pairinB,SIMPLIFY = FALSE)
-  sink()
-  file.remove("runtime_messeges.txt")
+                                               data=data,verbose = FALSE),pairformula,pairinB,SIMPLIFY = FALSE)
+
   ###get the estimates from paired fits
   allconv<-sapply(pairlcmm, function(x) x$conv)
 
