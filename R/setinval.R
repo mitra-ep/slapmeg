@@ -51,7 +51,7 @@ setinval<-function(fixed, random, subject, data){
                control = lme4::lmerControl(check.conv.grad = "ignore",
                                            check.conv.singular="ignore",
                                            check.conv.hess ="ignore")))
-  convmodel<-lapply(lmer_model,function(x) isSingular(x))
+  convmodel<-lapply(lmer_model,function(x) lme4::isSingular(x))
 
     ##extract initial values from individual models
   # fixed effects
@@ -88,6 +88,7 @@ setinval<-function(fixed, random, subject, data){
              covmat[,1], #variance of the random intercepts as the std of randomY
              rep(0:1,nout)) #trans. parameters fixed at 0 and 1
   }else{
+
     # variance of random effects
     covmat<-matrix(unlist(lapply(lmer_model,
                                  function(x) as.data.frame(lme4::VarCorr(x))[,5])),
@@ -107,7 +108,7 @@ setinval<-function(fixed, random, subject, data){
              covmat[,1], #std of the random intercepts as the std of randomY
              rep(0:1,nout)) #trans. parameters fixed at 0 and 1
 
-  }
+}
 
   #in case no lmms run successfully
   inB[is.na(inB)]<-1

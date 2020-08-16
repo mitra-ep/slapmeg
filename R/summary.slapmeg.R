@@ -42,7 +42,7 @@ summary.slapmeg<- function(object,...){
   cat("Shared latent Process meodel (Step 1) : \n")
   if(object$slapconv%%1!=0) cat("     Convergence criteria satisfied for",round(object$slapconv,2),
                            "of the pairwise models", "\n")
-  if(object$slapconv==1) cat("     Model(s) Convergenced \n")
+  if(object$slapconv==1) cat("     Model(s) Converged \n")
   if(object$slapconv==2) cat("     Maximum number of iteration reached without convergence \n")
   if(object$slapconv==3) cat("     Convergence with restrained Hessian matrix \n")
   if(object$slapconv==4|object$slapconv==12) {
@@ -51,7 +51,7 @@ summary.slapmeg<- function(object,...){
     cat(paste("     Number of parameters:", length(object$SLaP.par))," \n")
     cat(paste("     The Pathway:", paste0(object$Ynames, collapse = ", ")),"\n")
     cat("     Fixed effect terms:", object$fixedform,"\n")
-    cat("     Random effect terms:", object$randform,"\n")
+    cat("     Subject-specific random effect terms:", object$randform,"\n")
     cat(" \n")
 
     cat(" \n")
@@ -62,11 +62,12 @@ summary.slapmeg<- function(object,...){
 
 
     cat("Globaltest (Step 2):", "\n")
-    cat(paste("      p-value:", format(object$Globaltest[1],scientific=TRUE)),"\n")
-    cat(paste("      Test statistic:", format(object$Globaltest[2],scientific=TRUE)),"\n")
+    cat(paste("      p-value:", format(object$Globaltest[1],digits=4,scientific=TRUE)),"\n")
+    cat(paste("      Test statistic:", format(object$Globaltest[2],digits=4,scientific=TRUE)),"\n")
     cat(paste("      Expected value:", object$Globaltest[3]),"\n")
-    cat(paste("      Std.dev:", format(object$Globaltest[4]),scientific=TRUE),"\n")
+    cat(paste("      Std.dev:", format(object$Globaltest[4]),digits=4,scientific=TRUE),"\n")
     cat(paste("      #Cov:", object$Globaltest[5]),"\n")
+    cat(paste("      GT.model:", object$Globaltest[6]),"\n")
   }
 
 }

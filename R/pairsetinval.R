@@ -46,16 +46,13 @@ pairsetinval<-function(index, fixed, random, subject, data){
   #run the lme4 and save convergance status
   lmer.allformulas<-paste0(Ynames,"~",lmm.formula)
 
- # sink(file = "runtime_messeges.txt", append = FALSE, type = c("output", "message"), split = FALSE)
   lmer_model<-lapply(lmer.allformulas, function(x)
     lme4::lmer(x,REML=TRUE, data=data,
                control = lme4::lmerControl(check.conv.grad = "ignore",
                                                              check.conv.singular="ignore",
                                                              check.conv.hess ="ignore")))
-  #sink()
- # file.remove("runtime_messeges.txt")
 
-  convmodel<-lapply(lmer_model,function(x) summary(x)$`optinfo`$conv$lme4$`code`)
+  convmodel<-lapply(lmer_model,function(x) lme4::isSingular(x))
 
 
   ##extract initial values from individual models
@@ -93,8 +90,8 @@ pairsetinval<-function(index, fixed, random, subject, data){
                      byrow = TRUE, nrow=nset)
 
       #remove unsuccessful lmm fits
-      varfix[!sapply(convmodel_sub, is.null)]<-NA
-      covmat[!sapply(convmodel_sub, is.null),]<-NA
+      varfix[convmodel_sub==TRUE]<-NA
+      covmat[convmodel_sub==TRUE,]<-NA
 
       if(nfix==1){
         inB[[k]]<-c(colMeans(cbind(covmat[,2:nrand]^2,NA),na.rm=T)[-(nrand)], #variance of the random terms
@@ -129,8 +126,8 @@ pairsetinval<-function(index, fixed, random, subject, data){
                      byrow = TRUE, nrow=nset)
 
       #remove unsuccessful lmm fits
-      varfix[!sapply(convmodel_sub, is.null)]<-NA
-      covmat[!sapply(convmodel_sub, is.null),]<-NA
+      varfix[convmodel_sub==TRUE]<-NA
+      covmat[convmodel_sub==TRUE,]<-NA
 
       if(nfix==1){
         inB[[k]]<-c(covmat[,2], #std error of the outcomes

@@ -20,7 +20,7 @@ latent process mixed model and starts with the \code{~} sign. At least one rando
 effect should be included. Covariates with a random-effect are separated
 by \code{+}.}
 
-\item{grouping}{name of the covariate representing the grouping structure.}
+\item{grouping}{name of the covariate representing grouping by the phenotype}
 
 \item{subject}{name of the covariate representing the repeated measures structure such as subject IDs.}
 

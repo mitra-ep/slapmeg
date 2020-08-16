@@ -19,7 +19,7 @@
 #' effect should be included. Covariates with a random-effect are separated
 #' by \code{+}.
 #'
-#' @param grouping name of the covariate representing the grouping structure.
+#' @param grouping name of the covariate representing grouping by the phenotype
 #'
 #' @param subject name of the covariate representing the repeated measures structure such as subject IDs.
 #'
@@ -140,7 +140,7 @@ slapmeg<-function(fixed, random, grouping, subject, data, nlimit=10){
                         B=inB, posfix=(npar-2*nout+1):npar,
                         randomY=TRUE, link=rep("linear",nout),
                         data=data, verbose = FALSE)
-      #get info on subject and grouping
+    #get info on subject and grouping
     data_inf<-unique(data[,c(subject,grouping)])
 
     #name the predicted random effects
@@ -150,13 +150,11 @@ slapmeg<-function(fixed, random, grouping, subject, data, nlimit=10){
     rand_nam[rand_nam=="(Intercept)"] <- "intercept"
 
     #GT with estimates
-    formula_gtp<-formula(paste0("~",paste0(rand_nam,collapse = "+"),"+",paste0(Ynames,collapse ="+")),env=globalenv())
 
-    pair_EBS<-cbind(data_inf, lcmm_full$predRE[,-1], lcmm_full$predRE_Y[,-1])
+    EBS<-cbind(data_inf, lcmm_full$predRE[,-1], lcmm_full$predRE_Y[,-1])
+    if(nrand==1) names(EBS)<-c(colnames(data_inf),rand_nam,colnames(lcmm_full$predRE_Y[,-1]))
 
-    if(nrand==1) names(pair_EBS)<-c(colnames(data_inf),rand_nam,colnames(lcmm_full$predRE_Y[,-1]))
-
-    joint_gt<-globaltest::gt(data_inf[,grouping], formula_gtp, data=pair_EBS, permutations=1e5, model ="logistic")
+    gt_obj<-slapGT(EBS, data_inf, rand_nam, Ynames, grouping, Emethod="joint")
 
     #object to return
     nsubj<-length(unique(data[,subject]))
@@ -164,10 +162,6 @@ slapmeg<-function(fixed, random, grouping, subject, data, nlimit=10){
     tgroup<-table(data[,grouping])
     full_best<-lcmm_full$best[-c((npar-2*nout+1):npar)]
     slapconv=lcmm_full$conv
-
-    gt_obj<-c(joint_gt@result[,1],joint_gt@result[,2],joint_gt@result[,3],
-              joint_gt@result[,4],joint_gt@result[,5])
-    names(gt_obj)<-c("p-value","Statistic","Expected","Std.dev","Cov")
 
     res<-list(call=cl,
               nfix=nfix,
@@ -179,10 +173,10 @@ slapmeg<-function(fixed, random, grouping, subject, data, nlimit=10){
               slapconv=slapconv,
               fixedform=fixedform,
               randform=randform,
-              slapmethod="joint",
+              slapmethod="Joint",
               SLaP.par=full_best,
               Globaltest=gt_obj,
-              EB_pred=pair_EBS)
+              EB_pred=EBS)
 
     class(res) <-c("slapmeg")
     return(res)

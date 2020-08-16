@@ -39,14 +39,15 @@ if(is.null(obj$EB_pred)) stop('The full output by slapmeg function should be ret
 #extract data from output
 plotdata<-obj$EB_pred
 
-data_m<-melt(plotdata[,-1], id.vars = names(plotdata)[2], value.name = "value")
+data_m<-melt(plotdata[,-1], id.vars = names(plotdata)[2], value.name = "obs")
 #names(data_m)[1]<-"Group"
 labs_group<-unique(plotdata[,2])
 
 #plot the EBs
-ggplot(data_m, aes(x=value)) +
+ggplot(data_m, aes(x=obs)) +
   facet_wrap(.~variable, ncol = 2, scales = "free")+
   geom_density(aes(fill=data_m[,1]),alpha=0.5)+
+  guides(fill=guide_legend(title="Group"))+
   labs(y= "\n Density", x = "\n Estimate")+
   scale_fill_discrete(labels = paste(labs_group))+
   theme_minimal()

@@ -19,7 +19,7 @@
 #' effect should be included. Covariates with a random-effect are separated
 #' by \code{+}.
 #'
-#' @param grouping name of the covariate representing the grouping structure.
+#' @param grouping name of the covariate representing grouping by the phenotype
 #'
 #' @param subject name of the covariate representing the repeated measures structure such as subject IDs.
 #'
@@ -258,14 +258,8 @@ pairslapmeg<-function(fixed, random, grouping, subject, data){
                         paste("std.err",c(1:nout)),paste("std.randomY",c(1:nout)))}
 
   #####Second level test with GT
-  formula_gtp<-formula(paste0("~",
-                              paste0(rand_nam,collapse = "+"),"+",
-                              paste0(Ynames,collapse ="+")),env=globalenv())
-
-  pair_EBS<-cbind(data_inf, EBest)
-
-  ##gt with Full model
-  pair_gt<-globaltest::gt(data_inf[,grouping], formula_gtp, data=pair_EBS, permutations=1e5, model ="logistic")
+  EBS<-cbind(data_inf, EBest)
+  gt_obj<-slapGT(EBS, data_inf, rand_nam, Ynames, grouping, Emethod="pairwise")
 
 
   ##object to return
@@ -274,9 +268,7 @@ pairslapmeg<-function(fixed, random, grouping, subject, data){
   tgroup<-table(data[,grouping])
   slapconv<-sum(allconv==1)/length(indx)
 
-  gt_obj<-c(pair_gt@result[,1],pair_gt@result[,2],pair_gt@result[,3],
-            pair_gt@result[,4],pair_gt@result[,5])
-  names(gt_obj)<-c("p-value","Statistic","Expected","Std.dev","Cov")
+
 
   res<-list(call=cl,
             nfix=nfix,
@@ -288,10 +280,10 @@ pairslapmeg<-function(fixed, random, grouping, subject, data){
             slapconv=slapconv,
             fixedform=fixedform,
             randform=randform,
-            slapmethod="pairwise",
+            slapmethod="Pairwise",
             SLaP.par=pair_best,
             Globaltest=gt_obj,
-            EB_pred=pair_EBS)
+            EB_pred=EBS)
 
   class(res) <-c("slapmeg")
 
