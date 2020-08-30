@@ -30,21 +30,23 @@
 #' }
 #' @export
 #' @import ggplot2
+#' @importFrom reshape2 melt
 
 plotslapmeg<-function(obj,...){
+
+#make sure value is known
+value=NULL
 
 if(class(obj)!="slapmeg") stop('The object should be the output of slapmeg function!')
 if(is.null(obj$EB_pred)) stop('The full output by slapmeg function should be retrieved!')
 
 #extract data from output
 plotdata<-obj$EB_pred
-
-data_m<-melt(plotdata[,-1], id.vars = names(plotdata)[2], value.name = "obs")
-#names(data_m)[1]<-"Group"
+data_m<-reshape2::melt(plotdata[,-1], id.vars = names(plotdata)[2])
 labs_group<-unique(plotdata[,2])
 
 #plot the EBs
-ggplot(data_m, aes(x=obs)) +
+ggplot(data_m, aes(x=value)) +
   facet_wrap(.~variable, ncol = 2, scales = "free")+
   geom_density(aes(fill=data_m[,1]),alpha=0.5)+
   guides(fill=guide_legend(title="Group"))+

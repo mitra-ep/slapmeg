@@ -1,12 +1,12 @@
 Package: SlaPMEG
 Type: Package
-Title: Pathway testing for Longitudinal Omics
-Version: 0.1.0
+Title: Pathway Testing for Longitudinal Omics
+Version: 1.0.0
 Author: Mitra Ebrahimpoor
-Maintainer: Mitra Ebrahimpoor <m.ebrahimpoor@lumc.nl>
-Description: SLaPMEG fits a shared latent process mixed model over the longitudinal measures of omics in a pathway. The shared model allows deviation from this shared process at subject level (a random intercept, slope, or both per subject) and also at omic level (a random effect per omic). These random effects summarize the longitudinal trend of the observation which can be used to test for group diferences using Globaltest. If the pathway is large or the shared effect is small, it is possible to fit a series of pairwise methods and estimate the shared random effects based on them.
+Maintainer: Mitra Ebrahimpoor <mitra.ebrahimpoor@gmail.com>
+Description: A self-contained hypothesis is tested for a given pathway of longitudinal omics. SlaPMEG is a two-step procedure. First, a shared latent process mixed model is fitted over the longitudinal measures of omics in a pathway. This shared model allows deviation from the shared process at subject level (a random intercept, slope, or both per subject) and also at omic level (a random effect per omic). These random effects summarize the longitudinal trend of the observations which can be used to test for group differences using Globaltest in the second step. If the pathway is large or the shared effect is small, the package fits a series of pairwise models and estimates the shared random effects based on them.
 License: GPL (>= 2)
-Date: 2019-09-09
+Date: 2020-08-30
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
