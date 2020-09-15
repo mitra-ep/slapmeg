@@ -21,36 +21,44 @@
 #' paper title goes here
 #'
 #' @examples
+#' # simulate data with 8 omics
+#' testdata<-simslapmeg(nY=8, ntime=5, nsubj = 30)
+#' head(testdata)
 #'
-#' \dontrun{
-#' # run slapmeg for a pathway
-#' #' m1 <- slapmeg()
-#' #Plot the estimated random effects
-#' plotslapmeg(m1)
-#' }
+#' #fit slapmeg to test for the differential expression of a pathway of size 5
+#' fit<- slapmeg(Y1+Y2+Y6+Y7+Y8~time, ~1, grouping="group", subject="ID", data=testdata)
+#'
+#' #Density plots for the estimated random effects
+#' plotslapmeg(fit)
+#'
 #' @export
 #' @import ggplot2
-#' @importFrom reshape2 melt
+
 
 plotslapmeg<-function(obj,...){
 
 #make sure value is known
-value=NULL
+#value=NULL
 
 if(class(obj)!="slapmeg") stop('The object should be the output of slapmeg function!')
 if(is.null(obj$EB_pred)) stop('The full output by slapmeg function should be retrieved!')
 
 #extract data from output
 plotdata<-obj$EB_pred
-data_m<-reshape2::melt(plotdata[,-1], id.vars = names(plotdata)[2])
+data_m<-data.frame(rep(plotdata[,1],each=ncol(plotdata)-2),
+                   rep(plotdata[,2],each=ncol(plotdata)-2),
+                   rep(colnames(plotdata)[-c(1,2)],nrow(plotdata)))
+names(data_m)<-c(colnames(plotdata)[1:2],"par")
+data_m <-cbind(data_m,data.frame(value=c(t(plotdata[,-c(1,2)]))))
+
 labs_group<-unique(plotdata[,2])
 
 #plot the EBs
-ggplot(data_m, aes(x=value)) +
-  facet_wrap(.~variable, ncol = 2, scales = "free")+
-  geom_density(aes(fill=data_m[,1]),alpha=0.5)+
+ggplot(data_m, aes(x=data_m$value)) +
+  facet_wrap(.~data_m$par, ncol = 2, scales = "free")+
+  geom_density(aes(fill=data_m$group),alpha=0.5)+
   guides(fill=guide_legend(title="Group"))+
-  labs(y= "\n Density", x = "\n Estimate")+
+  labs(y= "\n Density", x = "\n Estimated Effect")+
   scale_fill_discrete(labels = paste(labs_group))+
   theme_minimal()
 

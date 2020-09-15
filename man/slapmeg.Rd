@@ -55,15 +55,14 @@ is used to compare the two groups at a pathway level.
 }
 \examples{
 
-\dontrun{
 # simulate data with 8 omics
 testdata<-simslapmeg(nY=8, ntime=5, nsubj = 30)
 head(testdata)
 
 #fit slapmeg to test for the differential expression of a pathway of size 5
-slapmeg1<- slapmeg(Y1+Y2+Y6+Y7+Y8~time, ~1, grouping="group", subject="ID", data=testdata)
-slapmeg1
-}
+fit<- slapmeg(Y1+Y2+Y6+Y7+Y8~time, ~1, grouping="group", subject="ID", data=testdata)
+fit
+summary(fit)
 
 }
 \references{

@@ -36,11 +36,11 @@
 #' \code{\link{slapmeg}}, \code{\link{pairslapmeg}}, \code{\link{plotslapmeg}}
 #'
 #' @references
-#' paper title goes here
+#' paper DOI will be added.
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' # simulate data with 20 omics
 #' testdata<-simslapmeg(nY=20, ntime=5, nsubj = 30)
 #' head(testdata)
@@ -54,9 +54,10 @@
 #'
 #' #use mult slampmeg to get test for the differential expression of all pathways
 #' #and get adjusted p-values
-#' mslapmeg<- multslapmeg(pathlist, ~time, ~1+time, grouping="group", subject="ID", data=testdata)
-#' slapmeg1
+#' mfit<- multslapmeg(pathlist, ~time, ~1+time, grouping="group", subject="ID", data=testdata)
+#' summary(mfit)
 #' }
+#'
 #' @export
 #'
 #' @importFrom stats p.adjust formula terms
@@ -81,23 +82,23 @@ multslapmeg<-function(pathlist, fixed, random, grouping, subject, method = "BH",
                       function(x) paste0(paste0(x,collapse="+"),"~",Reduce(paste, deparse(fixed[[2]]))))
   fixed_forms<-lapply(fixed_forms, function(f) as.formula(f))
 
-  raw.ps<-sapply(fixed_forms, function(forms) {
+  slapmeg<-sapply(fixed_forms, function(forms) {
                               mod<-slapmeg(forms, random, grouping, subject, data)
-                              return(mod$Globaltest[1]) })
-
-  names(raw.ps)<-NULL
+                              return(list(mod$Globaltest[1], mod$slapmethod)) })
+  psize<-sapply(pathlist, function(x) length(x))
 
   #correct the p-values and round the result
-  adj.ps<-round(p.adjust(raw.ps, method), 4)
+  adj.ps<-round(p.adjust(slapmeg[[1]], method), 4)
 
   #organize and return the output
   if(is.null(names(pathlist))) {
-    path.nom<-paste0("Path",1:length(adj.ps))} else
+    path.nom<-paste0("Path", 1:length(adj.ps))} else
       path.nom<-names(pathlist)
 
-  res<-data.frame(path.nom, adj.ps)
-  colnames(res)<-c("Path.Name",paste0("adj.P-value","(",paste(method),")"))
+  res<-data.frame(path.nom, adj.ps, psize, slapmeg[[2]],row.names = NULL)
+  colnames(res)<-c("Path.Name",paste0("adj.P","(",paste(method),")"),"Path.size","method")
 
+  class(res) <-c("mslapmeg")
   return(res)
 
 }

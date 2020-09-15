@@ -39,7 +39,7 @@ Then the p-values are adjusted for multiple comparisons based on the selected pr
 }
 \examples{
 
-\dontrun{
+\donttest{
 # simulate data with 20 omics
 testdata<-simslapmeg(nY=20, ntime=5, nsubj = 30)
 head(testdata)
@@ -53,12 +53,13 @@ pathlist<-list(path1=sample(colnames(testdata)[-c(1:3)],5),
 
 #use mult slampmeg to get test for the differential expression of all pathways
 #and get adjusted p-values
-mslapmeg<- multslapmeg(pathlist, ~time, ~1+time, grouping="group", subject="ID", data=testdata)
-slapmeg1
+mfit<- multslapmeg(pathlist, ~time, ~1+time, grouping="group", subject="ID", data=testdata)
+summary(mfit)
 }
+
 }
 \references{
-paper title goes here
+paper DOI will be added.
 }
 \seealso{
 \code{\link{slapmeg}}, \code{\link{pairslapmeg}}, \code{\link{plotslapmeg}}

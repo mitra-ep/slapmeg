@@ -21,13 +21,16 @@ This plot can provide a graphical insight into the source of effect (i.e. diffre
 in relevent pathway.
 }
 \examples{
+# simulate data with 8 omics
+testdata<-simslapmeg(nY=8, ntime=5, nsubj = 30)
+head(testdata)
 
-\dontrun{
-# run slapmeg for a pathway
-#' m1 <- slapmeg()
-#Plot the estimated random effects
-plotslapmeg(m1)
-}
+#fit slapmeg to test for the differential expression of a pathway of size 5
+fit<- slapmeg(Y1+Y2+Y6+Y7+Y8~time, ~1, grouping="group", subject="ID", data=testdata)
+
+#Density plots for the estimated random effects
+plotslapmeg(fit)
+
 }
 \references{
 paper title goes here
