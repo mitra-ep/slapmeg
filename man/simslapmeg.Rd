@@ -4,10 +4,22 @@
 \alias{simslapmeg}
 \title{Simulate longitudinal data based on a shared latent process mixed effects model (SlaPMEG)}
 \usage{
-simslapmeg(nY, ntime, nsubj, pDif = 1/3, fixed = ~1 + time,
-  random = ~1 + time, fixedbeta = c(0, 2), randbeta = c(0, 2), group,
-  groupbeta = 2, sigma.b, sigma.u, seed = as.integer(runif(1, 0,
-  .Machine$integer.max)), returnpar = FALSE)
+simslapmeg(
+  nY,
+  ntime,
+  nsubj,
+  pDif = 1/3,
+  fixed = ~1 + time,
+  random = ~1 + time,
+  fixedbeta = c(0, 2),
+  randbeta = c(0, 2),
+  group,
+  groupbeta = 2,
+  sigma.b,
+  sigma.u,
+  seed = as.integer(runif(1, 0, .Machine$integer.max)),
+  returnpar = FALSE
+)
 }
 \arguments{
 \item{nY}{number of omics in the data}

@@ -53,12 +53,12 @@
 #' \code{\link{multslapmeg}}, \code{\link{pairslapmeg}}, \code{\link{plotslapmeg}}
 #'
 #' @references
-#' paper title goes here
+#' Ebrahimpoor, Mitra, Pietro Spitali, Jelle J. Goeman, and Roula Tsonaka. "Pathway testing for longitudinal metabolomics." Statistics in Medicine (2021).
 #'
 #' @examples
 #'
 #' # simulate data with 8 omics
-#' testdata<-simslapmeg(nY=8, ntime=5, nsubj = 30)
+#' testdata<-simslapmeg(nY=8, ntime=5, nsubj = 30, seed=123)
 #' head(testdata)
 #'
 #' #fit slapmeg to test for the differential expression of a pathway of size 5
@@ -112,16 +112,14 @@ slapmeg<-function(fixed, random, grouping, subject, data, nlimit=10){
 
   ###fit the original or pairwise lcmm
   #list of outcomes
-  Ynames <-  all.vars(fixed[[2]])
+  Ynames <- all.vars(fixed[[2]])
   nout <- length(Ynames) #number of omics in path
+
   if(nout>nlimit){
     #get the initial values from setinval
-
-
     res<-do.call(pairslapmeg,list(fixed, random, grouping, idNames, data))
 
   }else{
-
 
     ###list of all variables
     varNames <- c(all.vars(fixed[-2]), all.vars(random))
@@ -139,7 +137,8 @@ slapmeg<-function(fixed, random, grouping, subject, data, nlimit=10){
                         B=inB, posfix=(npar-2*nout+1):npar,
                         randomY=TRUE, link=rep("linear",nout),
                         data=data, verbose = FALSE)
-    #get info on subject and grouping
+
+        #get info on subject and grouping
     data_inf<-unique(data[,c(subject,grouping)])
 
     #name the predicted random effects
@@ -177,9 +176,12 @@ slapmeg<-function(fixed, random, grouping, subject, data, nlimit=10){
               Globaltest=gt_obj,
               EB_pred=EBS)
 
+
     class(res) <-c("slapmeg")
     return(res)
 
-  }
+    }
 
-}
+
+
+  }

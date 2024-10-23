@@ -5,8 +5,7 @@
 \title{Testing multiple pathways using SLaPMEG (shared latent process mixed effects model and Globaltest) for
 longitudinal Omics data}
 \usage{
-multslapmeg(pathlist, fixed, random, grouping, subject, method = "BH",
-  data)
+multslapmeg(pathlist, fixed, random, grouping, subject, method = "BH", data)
 }
 \arguments{
 \item{pathlist}{A list of pathways to be tested.}
@@ -41,11 +40,10 @@ Then the p-values are adjusted for multiple comparisons based on the selected pr
 
 \donttest{
 # simulate data with 20 omics
-testdata<-simslapmeg(nY=20, ntime=5, nsubj = 30)
+testdata<-simslapmeg(nY=20, ntime=5, nsubj = 30, seed=123)
 head(testdata)
 
 # creat a list of 3 random pathways of different sizes
-
 pathlist<-list(path1=sample(colnames(testdata)[-c(1:3)],5),
               path2=sample(colnames(testdata)[-c(1:3)],11),
               path3=sample(colnames(testdata)[-c(1:3)],9) )
@@ -59,7 +57,7 @@ summary(mfit)
 
 }
 \references{
-paper DOI will be added.
+Ebrahimpoor, Mitra, Pietro Spitali, Jelle J. Goeman, and Roula Tsonaka. "Pathway testing for longitudinal metabolomics." Statistics in Medicine (2021).
 }
 \seealso{
 \code{\link{slapmeg}}, \code{\link{pairslapmeg}}, \code{\link{plotslapmeg}}

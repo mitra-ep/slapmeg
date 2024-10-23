@@ -51,13 +51,13 @@
 #' \code{\link{slapmeg}}, \code{\link{multslapmeg}}, \code{\link{plotslapmeg}}
 #'
 #' @references
-#' paper DOI will be added
+#' Ebrahimpoor, Mitra, Pietro Spitali, Jelle J. Goeman, and Roula Tsonaka. "Pathway testing for longitudinal metabolomics." Statistics in Medicine (2021).
 #'
 #' @examples
 #'
 #'
 #' # simulate data with 15 omics
-#' testdata<-simslapmeg(nY=25, ntime=3, nsubj = 30)
+#' testdata<-simslapmeg(nY=25, ntime=3, nsubj = 30, seed=123)
 #' head(testdata)
 #'
 #' #fit slapmeg to test for the differential expression of a pathway of size 15
@@ -267,8 +267,7 @@ pairslapmeg<-function(fixed, random, grouping, subject, data){
   tgroup<-table(data[,grouping])
   slapconv<-sum(allconv==1)/length(indx)
 
-
-
+  #result
   res<-list(call=cl,
             nfix=nfix,
             nrand=nrand,

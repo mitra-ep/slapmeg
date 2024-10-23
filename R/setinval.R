@@ -74,16 +74,16 @@ setinval<-function(fixed, random, subject, data){
     covmat[sapply(convmodel, function(x) x==TRUE),]<-NA
 
     if(nfix==1){
-      inB<-c(colMeans(cbind(covmat[,2:nrand]^2,NA),na.rm=T)[-(nrand)], #variance of the random terms
-             colMeans(cbind(covmat[,(nrand+2):ncol(covmat)-1],NA),na.rm=T)[-(nrand)], #corr. random terms
+      inB<-c(colMeans(cbind(covmat[,(nrand+2):ncol(covmat)-1],NA),na.rm=T)[-(nrand)], #corr. random terms
+             colMeans(cbind(covmat[,2:nrand]^2,NA),na.rm=T)[-(nrand)], #variance of the random terms
              covmat[,ncol(covmat)], #std error of the outcomes
              covmat[,1], #variance of the random intercepts as the std of randomY
              rep(0:1,nout)) #trans. parameters fixed at 0 and 1
     }else
 
       inB<-c(colMeans(varfix,na.rm=T), #fixed effects
-             colMeans(cbind(covmat[,2:nrand]^2,NA),na.rm=T)[-(nrand)], #variance of the random terms
              colMeans(cbind(covmat[,(nrand+2):ncol(covmat)-1],NA),na.rm=T)[-(nrand)], #corr. random terms
+             colMeans(cbind(covmat[,2:nrand]^2,NA),na.rm=T)[-(nrand)], #variance of the random terms
              covmat[,ncol(covmat)], #std error of the outcomes
              covmat[,1], #variance of the random intercepts as the std of randomY
              rep(0:1,nout)) #trans. parameters fixed at 0 and 1

@@ -54,7 +54,7 @@ effects are used within globaltest to compare the two groups at a pathway level.
 
 
 # simulate data with 15 omics
-testdata<-simslapmeg(nY=25, ntime=3, nsubj = 30)
+testdata<-simslapmeg(nY=25, ntime=3, nsubj = 30, seed=123)
 head(testdata)
 
 #fit slapmeg to test for the differential expression of a pathway of size 15
@@ -64,7 +64,7 @@ summary(slapmegfit)
 
 }
 \references{
-paper DOI will be added
+Ebrahimpoor, Mitra, Pietro Spitali, Jelle J. Goeman, and Roula Tsonaka. "Pathway testing for longitudinal metabolomics." Statistics in Medicine (2021).
 }
 \seealso{
 \code{\link{slapmeg}}, \code{\link{multslapmeg}}, \code{\link{plotslapmeg}}
