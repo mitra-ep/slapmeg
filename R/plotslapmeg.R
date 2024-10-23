@@ -5,9 +5,11 @@
 #'
 #' @param obj  An slapmeg object which is the output from \code{\link{slapmeg}} or
 #' \code{\link{pairslapmeg}}. Note that the \code{fullreturn=TRUE}) must have been used.
-#' @param \dots optional graphical parameters can be added with an \code{+} based on \code{\link{ggplot2}}
+#'
+#' @param \dots optional graphical parameters can be added with an \code{+} based on ggplot2 package.
 #' structure.
-#' @return returns NULL
+#'
+#' @return No return value, the function generates a plot and displays it.
 #'
 #' @author Mitra Ebrahimpoor
 #'
@@ -15,7 +17,7 @@
 #'
 #' @seealso
 #'
-#'  \code{\link{slapmeg}}, \code{\link{multslapmeg}}, \code{\link{pairslapmeg}}
+#'\code{\link{slapmeg}}, \code{\link{multslapmeg}}, \code{\link{pairslapmeg}}
 #'
 #' @references
 #' Ebrahimpoor, Mitra, Pietro Spitali, Jelle J. Goeman, and Roula Tsonaka. "Pathway testing for longitudinal metabolomics." Statistics in Medicine (2021).
@@ -32,7 +34,7 @@
 #' plotslapmeg(fit)
 #'
 #' @export
-#' @import ggplot2
+#' @importFrom ggplot2
 
 
 plotslapmeg<-function(obj,...){
@@ -40,7 +42,7 @@ plotslapmeg<-function(obj,...){
 #make sure value is known
 #value=NULL
 
-if(class(obj)!="slapmeg") stop('The object should be the output of slapmeg function!')
+if(!inherits(obj, "slapmeg")) stop('The object should be the output of slapmeg function!')
 if(is.null(obj$EB_pred)) stop('The full output by slapmeg function should be retrieved!')
 
 #extract data from output

@@ -67,7 +67,7 @@ multslapmeg<-function(pathlist, fixed, random, grouping, subject, method = "BH",
   if(missing(fixed)) stop('The argument fixed must be specified for all models!')
   if(missing(random)) stop('The argument random must be specified for all models!')
 
-  if(class(pathlist)!="list") stop("Pathlist argument should be a list!")
+  if (!inherits(pathlist, "list")) stop("Pathlist argument should be a list!")
   if(length(pathlist)<2) stop("Only one pathway is defined!")
 
   if(fixed[[1]]!="~") stop("The Fixed formula is not correctly specified! Check the vignette for help.")

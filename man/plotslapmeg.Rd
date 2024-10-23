@@ -10,11 +10,11 @@ plotslapmeg(obj, ...)
 \item{obj}{An slapmeg object which is the output from \code{\link{slapmeg}} or
 \code{\link{pairslapmeg}}. Note that the \code{fullreturn=TRUE}) must have been used.}
 
-\item{\dots}{optional graphical parameters can be added with an \code{+} based on \code{\link{ggplot2}}
+\item{\dots}{optional graphical parameters can be added with an \code{+} based on ggplot2 package.
 structure.}
 }
 \value{
-returns NULL
+No return value, the function generates a plot and displays it.
 }
 \description{
 This plot can provide a graphical insight into the source of effect (i.e. diffrential expression)

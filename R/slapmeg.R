@@ -78,8 +78,8 @@ slapmeg<-function(fixed, random, grouping, subject, data, nlimit=10){
 
   ##preliminary checks for formula and elements
   if(missing(fixed)) stop('The argument Fixed must be specified for all models!')
-  if(class(fixed)!="formula") stop("The argument Fixed must be a formula!")
-  if (length(fixed[[2]])<2) stop('Pathway must include more than one feature!')
+  if(!inherits(fixed, "formula")) stop("The argument Fixed must be a formula!")
+  if(length(fixed[[2]])<2) stop('Pathway must include more than one feature!')
 
   if(random==~-1) stop("At least a random intercept is required!")
   if(missing(random)) stop("At least a random intercept is required!")
