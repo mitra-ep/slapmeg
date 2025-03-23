@@ -57,8 +57,7 @@
 #'
 #'
 #' # simulate data with 15 omics
-#' set.seed(542)
-#' testdata<-simslapmeg(nY=25, ntime=3, nsubj = 30, seed=123)
+#' testdata<-simslapmeg(nY=15, ntime=3, nsubj = 30, seed=542)
 #' head(testdata)
 #'
 #' #fit slapmeg to test for the differential expression of a pathway of size 15
