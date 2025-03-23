@@ -42,6 +42,7 @@
 #'
 #' \donttest{
 #' # simulate data with 20 omics
+#' set.seed(142)
 #' testdata<-simslapmeg(nY=20, ntime=5, nsubj = 30, seed=123)
 #' head(testdata)
 #'

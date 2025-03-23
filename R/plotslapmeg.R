@@ -24,6 +24,7 @@
 #'
 #' @examples
 #' # simulate data with 8 omics
+#' set.seed(542)
 #' testdata<-simslapmeg(nY=8, ntime=5, nsubj = 30, seed=123)
 #' head(testdata)
 #'
@@ -34,7 +35,8 @@
 #' plotslapmeg(fit)
 #'
 #' @export
-#' @importFrom ggplot2
+#'
+#' @import ggplot2
 
 
 plotslapmeg<-function(obj,...){

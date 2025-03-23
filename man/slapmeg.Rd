@@ -55,7 +55,8 @@ is used to compare the two groups at a pathway level.
 }
 \examples{
 
-# simulate data with 8 omics
+#simulate data with 8 omics
+set.seed(542)
 testdata<-simslapmeg(nY=8, ntime=5, nsubj = 30, seed=123)
 head(testdata)
 

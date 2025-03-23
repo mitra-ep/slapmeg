@@ -2,7 +2,6 @@ Package: SlaPMEG
 Type: Package
 Title: Pathway Testing for Longitudinal Omics
 Version: 1.0.2
-Author: Mitra Ebrahimpoor
 Maintainer: Mitra Ebrahimpoor <mitra.ebrahimpoor@gmail.com>
 Authors@R: person(given = "Mitra",
                     family = "Ebrahimpoor",
